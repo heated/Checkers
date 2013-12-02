@@ -2,9 +2,9 @@ require_relative 'piece.rb'
 require 'colorize'
 
 class Board
-	def initialize
+	def initialize(empty = false)
     init_board
-		init_pieces
+		init_pieces unless empty
 	end
 
   def init_board
@@ -39,6 +39,19 @@ class Board
 			# TODO
 		end
 	end
+
+  def dup
+    new_board = Board.new(true)
+    pieces.each do |piece|
+      piece.dup(new_board)
+    end
+    p new_board
+    new_board
+  end
+
+  def pieces
+    @grid.flatten.reject { |piece| piece.nil? }
+  end
 
 	def empty?(pos)
 		on_board?(pos) && self[pos].nil?
@@ -77,10 +90,10 @@ board = Board.new
 pawn = board[[0, 5]]
 enemy = board[[1, 2]]
 
-pawn.perform_moves!([[1, 4]])
-pawn.perform_moves!([[2, 3]])
+# pawn.perform_moves!([[1, 4]])
+# pawn.perform_moves!([[2, 3]])
 
-enemy.perform_moves!([[3, 4]])
+# enemy.perform_moves!([[3, 4]])
 
 # board.move([5, 1], [4, 2])
 
