@@ -25,4 +25,8 @@ class Piece
 	def king?
 		king
 	end
+
+	def to_s
+		"o"
+	end
 end
