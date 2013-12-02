@@ -1,20 +1,11 @@
 require_relative 'board.rb'
 require_relative 'player.rb'
-require 'socket'
 
 class Game
   def initialize(players)
     @players = players
     @board = Board.new
     setup_pieces
-
-    pawn = @board[[0, 5]]
-    enemy = @board[[1, 2]]
-
-    pawn.perform_moves([[1, 4]])
-    pawn.perform_moves([[2, 3]])
-
-    enemy.perform_moves([[3, 4]])
   end
 
   def play
@@ -41,7 +32,7 @@ class Game
         8.times do |col|
           color = first_player ? :b : :r
           mod_row = first_player ? row + 5 : row
-          Piece.new(color, [col, mod_row], @board) if (col + mod_row).odd?
+          Piece.new(color, [col, mod_row], @board) if (col + mod_row).odd? && col.odd?
         end
       end
     end
@@ -63,5 +54,5 @@ end
 John = HumanPlayer.new("John")
 Fred = HumanPlayer.new("Fred")
 
-funtimes = Game.new( {:b => John, :r => Fred} )
-funtimes.play
+checkers = Game.new( {:b => John, :r => Fred} )
+checkers.play

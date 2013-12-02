@@ -13,7 +13,7 @@ class Piece
 
   def maybe_promote
     y = @pos[1]
-    (color == :b ? y == 0 : y == 7)
+    (@color == :b ? y == 0 : y == 7)
   end
 
   def move_diffs

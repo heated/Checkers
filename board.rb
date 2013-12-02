@@ -51,6 +51,10 @@ class Board
 		pos.all? { |coord| (0...8).include?(coord) }
 	end
 
+  def winner
+    pieces(:b).empty? ? :r : :b
+  end
+
   def over?
     pieces(:b).empty? || pieces(:r).empty?
   end
