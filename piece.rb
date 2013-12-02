@@ -34,12 +34,23 @@ class Piece
     moves
   end
 
+  def perform_moves(moves)
+    if valid_move_seq?(moves)
+      perform_moves!(moves)
+    else
+      raise InvalidMoveError.new
+    end
+  end
+
   def perform_moves!(moves)
     if moves.length == 1
       move = moves[0]
-      raise InvalidMoveError.new unless perform_slide(move) || perform_jump(move)
+      raise InvalidMoveError.new unless perform_slide(move) || 
+                                        perform_jump(move)
     else
-      raise InvalidMoveError.new unless moves.all? { |move| perform_jump(move) }
+      raise InvalidMoveError.new unless moves.all? do |move|
+        perform_jump(move)
+      end
     end
   end
 

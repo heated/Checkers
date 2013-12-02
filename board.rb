@@ -45,7 +45,6 @@ class Board
     pieces.each do |piece|
       piece.dup(new_board)
     end
-    p new_board
     new_board
   end
 
@@ -73,7 +72,6 @@ class Board
 				piece = @grid[y][x] 
 
 				new_str = (piece.nil? ? " " : piece.to_s)
-
 				new_str += " "
 
         str << ((x + y).even? ? new_str.black.on_white : new_str.black.on_green)
@@ -90,10 +88,10 @@ board = Board.new
 pawn = board[[0, 5]]
 enemy = board[[1, 2]]
 
-# pawn.perform_moves!([[1, 4]])
-# pawn.perform_moves!([[2, 3]])
+pawn.perform_moves([[1, 4]])
+pawn.perform_moves([[2, 3]])
 
-# enemy.perform_moves!([[3, 4]])
+enemy.perform_moves([[3, 4]])
 
 # board.move([5, 1], [4, 2])
 
