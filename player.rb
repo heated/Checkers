@@ -5,20 +5,16 @@ class HumanPlayer
   end
 
   def play_turn(board, color)
+    puts board
     puts "\nPick a piece to move."
-    piece_pos = parse_input(board)
+    piece_pos = parse_input(gets.chomp)
 
     raise "That isn't your piece!" if board.enemy?(piece_pos, color)
     raise "There's no piece there!" if board.empty?(piece_pos)
     raise "That's not even a coordinate" unless board.on_board?(piece_pos)
 
-    board.show_moves(piece_pos)
-    p board
-
     puts "\nWhere do you want to move to?"
-    move_to_pos = parse_input(board)
-
-    board.hide_moves
+    move_to_pos = parse_input(gets.chomp)
 
     board.move(piece_pos, move_to_pos)
   end

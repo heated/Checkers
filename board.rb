@@ -2,26 +2,13 @@ require_relative 'piece.rb'
 require 'colorize'
 
 class Board
-	def initialize(empty = false)
+	def initialize
     init_board
-		init_pieces unless empty
 	end
 
   def init_board
     @grid = Array.new(8) { Array.new(8) }
   end
-
-	def init_pieces
-		[true, false].each do |first_player|
-			3.times do |row|
-				8.times do |col|
-					color = first_player ? :b : :r
-					mod_row = first_player ? row + 5 : row
-					Piece.new(color, [col, mod_row], self) if (col + mod_row).odd?
-				end
-			end
-		end
-	end
 
 	def [](pos)
 		i, j = pos
@@ -41,14 +28,18 @@ class Board
 	end
 
   def dup
-    new_board = Board.new(true)
-    pieces.each do |piece|
+    new_board = Board.new
+    all_pieces.each do |piece|
       piece.dup(new_board)
     end
     new_board
   end
 
-  def pieces
+  def pieces(color)
+    all_pieces.reject { |piece| piece.color != color }
+  end
+
+  def all_pieces
     @grid.flatten.reject { |piece| piece.nil? }
   end
 
@@ -59,6 +50,10 @@ class Board
 	def on_board?(pos)
 		pos.all? { |coord| (0...8).include?(coord) }
 	end
+
+  def over?
+    pieces(:b).empty? || pieces(:r).empty?
+  end
 
 	def enemy?(pos, color)
 		on_board?(pos) && !empty?(pos) && self[pos].color != color
@@ -83,17 +78,3 @@ class Board
 		str
 	end
 end
-
-board = Board.new
-
-pawn = board[[0, 5]]
-enemy = board[[1, 2]]
-
-pawn.perform_moves([[1, 4]])
-pawn.perform_moves([[2, 3]])
-
-enemy.perform_moves([[3, 4]])
-
-# board.move([5, 1], [4, 2])
-
-puts board
