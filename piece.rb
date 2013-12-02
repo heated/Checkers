@@ -1,4 +1,10 @@
 class Piece
+	attr_reader :color
+
+	def initialize(color)
+		@color = color
+		@king = false
+	end
 
 	def promote
 
@@ -14,5 +20,9 @@ class Piece
 
 	def maybe_promote
 
+	end
+
+	def king?
+		king
 	end
 end
