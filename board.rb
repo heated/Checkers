@@ -74,7 +74,8 @@ class Board
 				new_str = (piece.nil? ? " " : piece.to_s)
 				new_str += " "
 
-        str << ((x + y).even? ? new_str.black.on_white : new_str.black.on_green)
+        str << ((x + y).even? ? new_str.black.on_white :
+                                new_str.black.on_green)
 			end
 			str << "\n"
 		end
