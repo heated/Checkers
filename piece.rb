@@ -1,9 +1,10 @@
 class Piece
 	attr_reader :color
 
-	def initialize(color)
-		@color = color
+	def initialize(color, pos, board)
+		@color, @pos, @board = color, pos, board
 		@king = false
+		board[pos] = self
 	end
 
 	def promote
@@ -15,6 +16,10 @@ class Piece
 	end
 
 	def perform_jump
+		
+	end
+
+	def perform_slide
 		
 	end
 

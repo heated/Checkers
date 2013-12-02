@@ -8,15 +8,13 @@ class Board
 	end
 
 	def init_pieces
-		3.times do |row|
-			8.times do |col|
-				self[[row, col]] = Piece.new(:r) if (row + col).even?
-			end
-		end
-
-		3.times do |row|
-			8.times do |col|
-				self[[row + 5, col]] = Piece.new(:b) if (row + 5 + col).even?
+		[true, false].each do |first_player|
+			3.times do |row|
+				8.times do |col|
+					color = first_player ? :b : :r
+					mod_row = first_player ? row + 5 : row
+					Piece.new(color, [mod_row, col], self) if (row + col).even?
+				end
 			end
 		end
 	end
