@@ -57,23 +57,30 @@ class Board
 	end
 
 	def to_s
-    # \e[H\e[2J
-    str = "x  a b c d e f g h \n"
+    str = "\e[H\e[2Jx  a b c d e f g h \n"
 
     @grid.size.times do |y|
       str << "\n" + (8 - y).to_s + " "
 			@grid.size.times do |x|
-				# account for terminal output
-				piece = @grid[x][y] 
-
-				new_str = (piece.nil? ? " " : piece.to_s)
-				new_str += " "
-
-        str << ((x + y).even? ? new_str.black.on_white :
-                                new_str.black.on_green)
+        str << render(x, y)
 			end
 		end
 
 		str
 	end
+
+  def render(x, y)
+    # account for terminal output
+    piece = @grid[x][y]
+
+    unless piece.nil?
+      new_str = piece.to_s
+      new_str = (piece.color == :r ? new_str.red.on_green :
+                                     new_str.black.on_green)
+    else
+      new_str = "  "
+      new_str = ((x + y).even? ? new_str.on_white :
+                                 new_str.on_green)
+    end
+  end
 end

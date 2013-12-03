@@ -1,3 +1,5 @@
+# encoding: UTF-8
+require 'colorize'
 class Piece
 	attr_reader :color, :pos
   def dup(board)
@@ -103,9 +105,11 @@ class Piece
 	end
 
 	def to_s
-		chr = (color == :b ? "x" : "o")
-		chr.upcase! if king?
-		chr
+    if king?
+      "◉ "
+    else
+      "● "
+    end
 	end
 
   def jump_chains
