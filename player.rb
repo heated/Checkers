@@ -5,7 +5,6 @@ class HumanPlayer
   end
 
   def play_turn(board, color)
-    puts board
     puts "\nPick a piece to move."
     piece_pos = parse_loc(gets.chomp)
 
@@ -36,4 +35,21 @@ class HumanPlayer
     coords[1] = 8 - Integer(coords.last)
     coords
   end
+end
+
+class ComputerPlayer
+  attr_reader :name
+  def initialize(name = "DESTRUCTINATOR")
+    @name = name
+  end
+
+  def play_turn(board, color)
+    piece = board.pieces(color).sample
+    move_list = piece.valid_moves.sample
+
+    # puts "computer moves from #{piece_pos} to #{move_list}"
+
+    piece.perform_moves(move_list)
+  end
+
 end

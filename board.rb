@@ -64,11 +64,14 @@ class Board
 	end
 
 	def to_s
-		str = ""
-		@grid.size.times do |x|
-			@grid.size.times do |y|
+    # \e[H\e[2J
+    str = "x  a b c d e f g h \n"
+
+    @grid.size.times do |y|
+      str << "\n" + (8 - y).to_s + " "
+			@grid.size.times do |x|
 				# account for terminal output
-				piece = @grid[y][x] 
+				piece = @grid[x][y] 
 
 				new_str = (piece.nil? ? " " : piece.to_s)
 				new_str += " "
@@ -76,7 +79,6 @@ class Board
         str << ((x + y).even? ? new_str.black.on_white :
                                 new_str.black.on_green)
 			end
-			str << "\n"
 		end
 
 		str

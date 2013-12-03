@@ -1,5 +1,5 @@
 class Piece
-	attr_reader :color
+	attr_reader :color, :pos
   def dup(board)
     Piece.new(@color, @pos, board)
   end
@@ -14,6 +14,10 @@ class Piece
   def maybe_promote
     y = @pos[1]
     (@color == :b ? y == 0 : y == 7)
+  end
+
+  def valid_moves
+    valid_slides + jump_chains
   end
 
   def move_diffs
@@ -104,6 +108,34 @@ class Piece
 		chr
 	end
 
+  def jump_chains
+    rec_possible_jumps
+      .map { |jumps| jumps.drop(1) }
+      .reject { |jumps| jumps.empty? }
+  end
+
+
+  # [[pos, jump1], [pos, jump2], [pos, jump3], [pos, jump4]]
+  # [[jump1], [jump2]]                    [[jump3], [jump4]]
+
+  def rec_possible_jumps
+    return [[@pos]] if valid_jumps.empty?
+
+    jump_list = []
+    valid_jumps.each do |jump|
+      test_board = @board.dup
+      test_piece = test_board[@pos]
+      test_piece.perform_jump(jump)
+      jump_list += test_piece.rec_possible_jumps
+    end
+
+    jump_list.map { |jumps| [@pos] + jumps }
+  end
+
+  def valid_jumps
+    move_diffs[1].select { |jump| valid_move_seq?([jump]) }
+  end
+
   def valid_move_seq?(moves)
     test_board = @board.dup
     test_piece = test_board[@pos]
@@ -114,6 +146,12 @@ class Piece
     else
       true
     end
+  end
+
+  def valid_slides
+    move_diffs[0]
+      .select { |slide| valid_move_seq?([slide]) }
+      .map { |slide| [slide] }
   end
 end
 

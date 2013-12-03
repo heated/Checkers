@@ -11,6 +11,7 @@ class Game
   def play
     current_player = :b
     until @board.over?
+      puts @board
       puts "\n#{print_current_player(current_player)} to play."
       begin
         @players[current_player].play_turn(@board, current_player)
@@ -32,8 +33,18 @@ class Game
         8.times do |col|
           color = first_player ? :b : :r
           mod_row = first_player ? row + 5 : row
-          Piece.new(color, [col, mod_row], @board) if (col + mod_row).odd? && col.odd?
+          Piece.new(color, [col, mod_row], @board) if (col + mod_row).odd?
         end
+      end
+    end
+  end
+
+  def setup_testing
+    [true, false].each do |first_player|
+      8.times do |col|
+        color = first_player ? :b : :r
+        mod_row = first_player ? 4 : 3
+        Piece.new(color, [col, mod_row], @board) if (col + mod_row).odd?
       end
     end
   end
@@ -52,7 +63,7 @@ class Game
 end
 
 John = HumanPlayer.new("John")
-Fred = HumanPlayer.new("Fred")
+Fred = ComputerPlayer.new
 
 checkers = Game.new( {:b => John, :r => Fred} )
 checkers.play
