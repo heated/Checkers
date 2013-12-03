@@ -118,10 +118,6 @@ class Piece
       .reject { |jumps| jumps.empty? }
   end
 
-
-  # [[pos, jump1], [pos, jump2], [pos, jump3], [pos, jump4]]
-  # [[jump1], [jump2]]                    [[jump3], [jump4]]
-
   def rec_possible_jumps
     return [[@pos]] if valid_jumps.empty?
 

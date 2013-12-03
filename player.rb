@@ -47,8 +47,6 @@ class ComputerPlayer
     piece = board.pieces(color).sample
     move_list = piece.valid_moves.sample
 
-    # puts "computer moves from #{piece_pos} to #{move_list}"
-
     piece.perform_moves(move_list)
   end
 
