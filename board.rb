@@ -20,13 +20,6 @@ class Board
 		@grid[i][j] = piece
 	end
 
-	def move(pos1, pos2)
-		unless self.empty?(pos1)
-			piece = self[pos1]
-			# TODO
-		end
-	end
-
   def dup
     new_board = Board.new
     all_pieces.each do |piece|

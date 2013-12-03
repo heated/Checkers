@@ -39,16 +39,6 @@ class Game
     end
   end
 
-  def setup_testing
-    [true, false].each do |first_player|
-      8.times do |col|
-        color = first_player ? :b : :r
-        mod_row = first_player ? 4 : 3
-        Piece.new(color, [col, mod_row], @board) if (col + mod_row).odd?
-      end
-    end
-  end
-
   def print_current_player(color)
     color == :b ? "Black" : "Red"
   end
